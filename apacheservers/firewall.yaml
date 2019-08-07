@@ -1,0 +1,21 @@
+
+---
+- hosts: prdx-webserver136 prdx-webserver236 prdx-webserver336
+  become: true
+  tasks:
+   - name: start firewalld
+     service: name=firewalld state=started
+   - name: adding firewall rules
+     shell: firewall-cmd --permanent --add-service={http,https}
+   - name: reloading firewalld
+     shell: firewall-cmd --reload
+- hosts: prdx-haproxy136
+  become: true
+  tasks:
+   - name: start firewalld
+     service: name=firewalld state=started
+   - name: adding firewall rules
+     shell: firewall-cmd --permanent --add-port=80/tcp
+   - name: reloading firewalld
+     shell: firewall-cmd --reload
+

@@ -1,0 +1,23 @@
+---
+
+- hosts: database6
+  become: yes
+
+  tasks:
+  - name: download mysql yum repo 
+    shell: wget http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm  
+
+  - name: install downloaded package 
+    yum:
+      name: mysql-community-release-el6-5.noarch.rpm
+  
+  - name: install mysql 
+    yum:
+      name: mysql-server 
+  
+  - name: start and enable mysqld
+    service:
+      name: mysqld
+      enabled: yes
+      state: started
+

@@ -1,32 +1,27 @@
 ---
-- hosts: webservers
-  remote_user: ansible
-  become: yes
-  tasks:
-  - name: install apache
-    yum:
-      name: httpd
-      state: latest
-  - name: create apache config file
-    template:
-     src: /srv/httpd.j2
-     dest: /etc/httpd.conf
-  - name: create index file
-    template:
-      src: /srv/index.j2
-      dest: /var/www/html/index.html
-  notify:
-  - restart apache
-  - name: start apache
-    service:
-      name: httpd
-      state: started
-  - name: enable apache
-    service:
-      name: httpd
-      state: enabled
-  handlers:
-    - name: restart apache
+  - hosts: prdx-webserver136 prdx-webserver236 prdx-webserver336
+    remote_user: ansible
+    become: yes
+    tasks:
+    - name: install apache
+      yum:
+        name: httpd
+        state: latest
+    - name: create index file
+      template:
+        src: /ansible/svr/index.j2
+        dest: /var/www/html/index.html
+      notify: restart apache
+    - name: start apache
       service:
-        name:httpd
-        state: restarted
+        name: httpd
+        state: started
+    - name: enable apache
+      service:
+        name: httpd
+        enabled: yes
+    handlers:
+      - name: restart apache
+        service:
+          name: httpd
+          state: restarted

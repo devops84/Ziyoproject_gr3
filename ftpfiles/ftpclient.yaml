@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install ftp client
+      yum: name=ftp  state=latest

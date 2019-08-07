@@ -1,0 +1,4 @@
+    - name: create apache config file
+      template:
+       src: /ansible/svr/httpd.j2
+       dest: /etc/httpd/conf/httpd.conf

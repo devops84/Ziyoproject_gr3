@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - name: installing all packages
+     yum: 
+       name: "{{ item }}"
+       state: present
+     loop:
+       - bind*
+       - man
+       - man-pages
+       - mlocate
+       - sysstat
+
